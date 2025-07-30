@@ -4,11 +4,15 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 /* Relative Imports */
 import { HelmetProvider } from "react-helmet-async";
+import { QueryClientProvider } from "@tanstack/react-query";
 
 /* Local Imports */
-import { ThemeProvider } from "./context/ThemeContext";
-import Routing from "./routes";
-import { SessionProvider } from "./context/SessionContext";
+import { ThemeContextProvider } from "@/context/ThemeContext";
+import Routing from "@/routes";
+import { SessionProvider } from "@/context/SessionContext";
+import ThemeModeSetting from "@/components/ThemeModeSetting";
+import { queryClient } from "@/config/queryClientConfig";
+import { Toaster } from "@/components/ui/sonner";
 
 // ----------------------------------------------------------------------
 
@@ -21,13 +25,17 @@ import { SessionProvider } from "./context/SessionContext";
 const App: React.FC = (): JSX.Element => {
   return (
     <HelmetProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ThemeContextProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <SessionProvider>
-          <Router>
-            <Routing />
-          </Router>
+          <ThemeModeSetting />
+          <QueryClientProvider client={queryClient}>
+            <Router>
+              <Routing />
+            </Router>
+            <Toaster />
+          </QueryClientProvider>
         </SessionProvider>
-      </ThemeProvider>
+      </ThemeContextProvider>
     </HelmetProvider>
   );
 };
