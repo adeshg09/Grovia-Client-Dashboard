@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 
 /* Local Imports */
 import App from "./App.tsx";
+import "./assets/fonts/index.css";
 import "./index.css";
 
 // ----------------------------------------------------------------------

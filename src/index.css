@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import './assets/fonts/index.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -9,6 +10,8 @@
 
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
+  --font-inter: var(--font-inter);
+
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -53,20 +56,6 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
-
-  /* GreyScale Colors */
-  /* --color-greyscale-900: var(--greyscale-900);
-  --color-greyscale-800: var(--greyscale-800);
-  --color-greyscale-700: var(--greyscale-700);
-  --color-greyscale-600: var(--greyscale-600);
-  --color-greyscale-500: var(--greyscale-500);
-  --color-greyscale-400: var(--greyscale-400);
-  --color-greyscale-300: var(--greyscale-300);
-  --color-greyscale-200: var(--greyscale-200);
-  --color-greyscale-100: var(--greyscale-100);
-  --color-greyscale-50: var(--greyscale-50);
-  --color-greyscale-25: var(--greyscale-25);
-  --color-greyscale-0: var(--greyscale-0); */
 
   /* Primary Colors */
   --color-primary-900: var(--primary-900);
@@ -140,6 +129,8 @@
 }
 
 :root {
+  --font-inter: "Inter", sans-serif;
+
   --radius: 0.625rem;
 
   --background: oklch(1 0 0);
@@ -183,20 +174,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-
-  /* GreyScale Colors */
-  /* --greyscale-900: #0D0D12;
-  --greyscale-800: #1A1B25;
-  --greyscale-700: #272835;
-  --greyscale-600: #36394A;
-  --greyscale-500: #666D80;
-  --greyscale-400: #818898;
-  --greyscale-300: #A4ACB9;
-  --greyscale-200: #C1C7D0;
-  --greyscale-100: #DFE1E7;
-  --greyscale-50: #ECEFF3;
-  --greyscale-25: #F6F8FA;
-  --greyscale-0: #F8FAFB; */
 
   /* Primary Colors */
   --primary-900: #100C74;
@@ -289,21 +266,11 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  /* GreyScale Colors */
-  /* --greyscale-900: #F8FAFB;
-  --greyscale-800: #F6F8FA;
-  --greyscale-700: #ECEFF3;
-  --greyscale-600: #DFE1E7;
-  --greyscale-500: #C1C7D0;
-  --greyscale-400: #A4ACB9;
-  --greyscale-300: #818898;
-  --greyscale-200: #666D80;
-  --greyscale-100: #36394A;
-  --greyscale-50: #272835;
-  --greyscale-25: #1A1B25;
-  --greyscale-0: #0D0D12; */
+
 
 }
+
+
 
 @layer base {
   * {
@@ -311,6 +278,6 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-inter;
   }
 }
