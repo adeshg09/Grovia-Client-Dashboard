@@ -11,9 +11,7 @@ import AdminDashboardLayout from "@/layout/AdminDashboardLayout";
 
 /* Super Admin Dashboard Module Imports */
 
-const MyAccountPage = lazy(
-  () => import("@/views/super-admin-dashboard/my-account/MyAccount")
-);
+const MyAccountPage = lazy(() => import("@/views/auth/my-account/MyAccount"));
 
 const ManageAnalyticPage = lazy(
   () =>
@@ -79,122 +77,145 @@ const NotAllowedPage = lazy(() => import("@/views/page-not-allowed"));
 
 // ----------------------------------------------------------------------
 
-const SuperAdminDashboardRoutes: Array<object> = [
-  {
-    path: PAGE_SUPER_ADMIN_DASHBOARD.root.relativePath,
-    element: (
-      <AuthGuard>
-        <AdminDashboardLayout>
-          <Outlet />
-        </AdminDashboardLayout>
-      </AuthGuard>
-    ),
-    children: [
-      {
-        index: true,
-        element: (
-          <Navigate to={PAGE_SUPER_ADMIN_DASHBOARD.analytics.relativePath} />
-        ),
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.account.relativePath,
-        element: <MyAccountPage />,
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.analytics.relativePath,
-        element: <ManageAnalyticPage />,
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.admins.relativePath,
-        children: [
-          {
-            index: true,
-            element: <ManageAdminPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.admins.create.relativePath,
-            element: <CreateAdminPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.admins.edit.relativePath,
-            element: <CreateAdminPage />,
-          },
-        ],
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.outlets.relativePath,
-        children: [
-          {
-            index: true,
-            element: <ManageOutletPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.outlets.create.relativePath,
-            element: <CreateOutletPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.outlets.edit.relativePath,
-            element: <CreateOutletPage />,
-          },
-        ],
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.products.relativePath,
-        children: [
-          {
-            index: true,
-            element: <ManageProductPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.products.create.relativePath,
-            element: <CreateProductPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.products.edit.relativePath,
-            element: <CreateProductPage />,
-          },
-        ],
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.categories.relativePath,
-        children: [
-          {
-            index: true,
-            element: <ManageCategoryPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.categories.create.relativePath,
-            element: <CreateCategoryPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.categories.edit.relativePath,
-            element: <CreateCategoryPage />,
-          },
-        ],
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.inventories.relativePath,
-        children: [
-          {
-            index: true,
-            element: <ManageInventoryPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.inventories.create.relativePath,
-            element: <CreateInventoryPage />,
-          },
-          {
-            path: PAGE_SUPER_ADMIN_DASHBOARD.inventories.edit.relativePath,
-            element: <CreateInventoryPage />,
-          },
-        ],
-      },
-      {
-        path: PAGE_SUPER_ADMIN_DASHBOARD.productRequests.relativePath,
-        element: <ManageProductRequestPage />,
-      },
-    ],
-  },
-];
+/* Functions */
+/**
+ * function to fetch routes
+ * @returns {void}
+ */
+const getSuperAdminDashboardRoutes = (): Array<object> => {
+  console.log("getSuperAdminDashboardRoutes called");
+  let dashboardRoutes: Array<object> = [
+    {
+      path: PAGE_SUPER_ADMIN_DASHBOARD.root.relativePath,
+      element: (
+        <AuthGuard>
+          <AdminDashboardLayout>
+            <></>
+          </AdminDashboardLayout>
+        </AuthGuard>
+      ),
+    },
+  ];
 
-export default SuperAdminDashboardRoutes;
+  dashboardRoutes = [
+    {
+      path: PAGE_SUPER_ADMIN_DASHBOARD.root.relativePath,
+      element: (
+        <AuthGuard>
+          <AdminDashboardLayout>
+            <Outlet />
+          </AdminDashboardLayout>
+        </AuthGuard>
+      ),
+      children: [
+        {
+          index: true,
+          element: (
+            <Navigate to={PAGE_SUPER_ADMIN_DASHBOARD.analytics.relativePath} />
+          ),
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.account.relativePath,
+          element: <MyAccountPage />,
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.analytics.relativePath,
+          element: <ManageAnalyticPage />,
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.admins.relativePath,
+          children: [
+            {
+              index: true,
+              element: <ManageAdminPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.admins.create.relativePath,
+              element: <CreateAdminPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.admins.edit.relativePath,
+              element: <CreateAdminPage />,
+            },
+          ],
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.outlets.relativePath,
+          children: [
+            {
+              index: true,
+              element: <ManageOutletPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.outlets.create.relativePath,
+              element: <CreateOutletPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.outlets.edit.relativePath,
+              element: <CreateOutletPage />,
+            },
+          ],
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.products.relativePath,
+          children: [
+            {
+              index: true,
+              element: <ManageProductPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.products.create.relativePath,
+              element: <CreateProductPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.products.edit.relativePath,
+              element: <CreateProductPage />,
+            },
+          ],
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.categories.relativePath,
+          children: [
+            {
+              index: true,
+              element: <ManageCategoryPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.categories.create.relativePath,
+              element: <CreateCategoryPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.categories.edit.relativePath,
+              element: <CreateCategoryPage />,
+            },
+          ],
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.inventories.relativePath,
+          children: [
+            {
+              index: true,
+              element: <ManageInventoryPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.inventories.create.relativePath,
+              element: <CreateInventoryPage />,
+            },
+            {
+              path: PAGE_SUPER_ADMIN_DASHBOARD.inventories.edit.relativePath,
+              element: <CreateInventoryPage />,
+            },
+          ],
+        },
+        {
+          path: PAGE_SUPER_ADMIN_DASHBOARD.productRequests.relativePath,
+          element: <ManageProductRequestPage />,
+        },
+      ],
+    },
+  ];
+
+  return dashboardRoutes;
+};
+
+export default getSuperAdminDashboardRoutes;

@@ -1,4 +1,5 @@
 /* Imports */
+import AdminDashboardPage from "@/components/Page/AdminDashboardPage";
 import { useEffect, useState, type JSX } from "react";
 
 /* Relative Imports */
@@ -23,7 +24,9 @@ const ManageProductRequest = (): JSX.Element => {
   /* Side-Effects */
 
   /* Output */
-  return <div>Manage Product Request</div>;
+  return (
+    <AdminDashboardPage title="Manage Product Requests"></AdminDashboardPage>
+  );
 };
 
 export default ManageProductRequest;

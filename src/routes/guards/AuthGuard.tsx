@@ -30,6 +30,8 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children }): JSX.Element => {
   const { isAuthenticated } = useContext(SessionContext);
   const location = useLocation();
 
+  console.log("authguard called");
+
   /* Output */
   if (!isAuthenticated) {
     return (

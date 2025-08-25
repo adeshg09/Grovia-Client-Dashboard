@@ -1,4 +1,5 @@
 /* Imports */
+import AdminDashboardPage from "@/components/Page/AdminDashboardPage";
 import { useEffect, useState, type JSX } from "react";
 
 /* Relative Imports */
@@ -23,7 +24,7 @@ const ManageCategory = (): JSX.Element => {
   /* Side-Effects */
 
   /* Output */
-  return <div>Manage Category</div>;
+  return <AdminDashboardPage title="Manage Categories"></AdminDashboardPage>;
 };
 
 export default ManageCategory;
