@@ -34,19 +34,27 @@ export interface UserGuardProps {
 
 const UserGuard: React.FC<UserGuardProps> = ({ children }): JSX.Element => {
   /* Hooks */
-  const { isAuthenticated, user } = useContext(SessionContext);
+  const { isAuthenticated, currentAccount } = useContext(SessionContext);
+  console.log("user guard called");
   const location = useLocation();
-  const returnUrl = new URLSearchParams(location.search).get("returnurl");
+  // const returnUrl = new URLSearchParams(location.search).get("returnurl");
+  // console.log("returnUrl", returnUrl);
 
   /* Output */
-  if (isAuthenticated && user) {
+  if (isAuthenticated && currentAccount) {
     let redirectPath = "";
-    if (user.outlet.id) {
-      redirectPath = PAGE_SUPER_ADMIN_DASHBOARD.analytics.absolutePath;
-    } else {
+    if (currentAccount?.outlet?.id) {
       redirectPath = PAGE_OUTLET_ADMIN_DASHBOARD.analytics.absolutePath;
+    } else {
+      redirectPath = PAGE_SUPER_ADMIN_DASHBOARD.analytics.absolutePath;
     }
-    return <Navigate to={returnUrl || redirectPath} state={location.state} />;
+    console.log("redirectPath", redirectPath);
+    return (
+      <Navigate
+        to={`${redirectPath}?returnurl=${location.pathname}`}
+        state={location.state}
+      />
+    );
   }
 
   return children;

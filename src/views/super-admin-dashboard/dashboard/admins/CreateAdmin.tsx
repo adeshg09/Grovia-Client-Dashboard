@@ -1,4 +1,5 @@
 /* Imports */
+import AdminDashboardPage from "@/components/Page/AdminDashboardPage";
 import { useContext, useEffect, useState, type JSX } from "react";
 
 /* Relative Imports */
@@ -23,7 +24,7 @@ const CreateAdmin = (): JSX.Element => {
   /* Side-Effects */
 
   /* Output */
-  return <div>Create Admin</div>;
+  return <AdminDashboardPage title="Create Admin"></AdminDashboardPage>;
 };
 
 export default CreateAdmin;

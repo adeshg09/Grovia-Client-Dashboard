@@ -5,6 +5,9 @@ import { lazy } from "react";
 import { PAGE_ROOT, ROOT_PATH } from "./paths";
 import UserGuard from "./guards/UserGuard";
 import AuthLayout from "@/layout/AuthLayout";
+import AuthGuard from "./guards/AuthGuard";
+import AdminDashboardLayout from "@/layout/AdminDashboardLayout";
+import MyAccount from "@/views/auth/my-account/MyAccount";
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +42,16 @@ const RootRoutes: Array<object> = [
           <SignInPage />
         </AuthLayout>
       </UserGuard>
+    ),
+  },
+  {
+    path: PAGE_ROOT.account.relativePath,
+    element: (
+      <AuthGuard>
+        <AdminDashboardLayout>
+          <MyAccount />
+        </AdminDashboardLayout>
+      </AuthGuard>
     ),
   },
 ];

@@ -1,4 +1,5 @@
 /* Imports */
+import AdminDashboardPage from "@/components/Page/AdminDashboardPage";
 import { useEffect, useState, type JSX } from "react";
 
 /* Relative Imports */
@@ -23,7 +24,9 @@ const ManageAnalytic = (): JSX.Element => {
   /* Side-Effects */
 
   /* Output */
-  return <div>Manage Analytics</div>;
+  return (
+    <AdminDashboardPage title="Analytics">Manage Analytics</AdminDashboardPage>
+  );
 };
 
 export default ManageAnalytic;

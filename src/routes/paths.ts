@@ -12,6 +12,10 @@ export const PAGE_ROOT = {
     relativePath: "signin",
     absolutePath: "/signin",
   },
+  account: {
+    relativePath: "my-account",
+    absolutePath: "/my-account",
+  },
   notFound: {
     relativePath: "not-found",
     absolutePath: "/not-found",
@@ -114,5 +118,9 @@ export const PAGE_OUTLET_ADMIN_DASHBOARD = {
   analytics: {
     relativePath: "analytics",
     absolutePath: `/${ROOT_OUTLET_ADMIN_DASHBOARD}/analytics`,
+  },
+  captains: {
+    relativePath: "captains",
+    absolutePath: `/${ROOT_OUTLET_ADMIN_DASHBOARD}/captains`,
   },
 };

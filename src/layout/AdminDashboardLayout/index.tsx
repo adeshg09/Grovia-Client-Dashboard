@@ -4,6 +4,8 @@ import React, { type JSX } from "react";
 /* Relative Imports */
 
 /* Local Imports */
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "./components/AppSidebar";
 
 // ----------------------------------------------------------------------
 
@@ -30,8 +32,17 @@ export interface AdminDashboardLayoutProps {
 const AdminDashboardLayout: React.FC<AdminDashboardLayoutProps> = ({
   children,
 }): JSX.Element => {
+  /* Hooks */
+
   /* Output */
-  return <div>{children}</div>;
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset className="flex flex-col h-screen overflow-hidden">
+        {children}
+      </SidebarInset>
+    </SidebarProvider>
+  );
 };
 
 export default AdminDashboardLayout;
