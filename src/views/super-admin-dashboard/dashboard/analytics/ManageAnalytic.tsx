@@ -2,7 +2,7 @@
 import AdminDashboardPage from "@/components/Page/AdminDashboardPage";
 import { type JSX } from "react";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { ChartBar, ChartLine, Users, DollarSign } from "lucide-react";
+import { ChartLine, Users, DollarSign } from "lucide-react";
 
 // ----------------------------------------------------------------------
 
@@ -99,7 +99,7 @@ const ManageAnalytic = (): JSX.Element => {
       </div>
 
       {/* Tailwind animation for bars */}
-      <style jsx>{`
+      <style>{`
         .animate-grow {
           animation: grow 0.6s ease-out forwards;
         }

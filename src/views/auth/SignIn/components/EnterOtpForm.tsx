@@ -50,8 +50,7 @@ const EnterOtpForm = ({
     },
   });
 
-  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleOtpChange = (value: string) => {
     const numbersOnly = value.replace(/\D/g, "").slice(0, 6);
     form.setValue("txtOtp", numbersOnly);
   };
@@ -117,7 +116,6 @@ const EnterOtpForm = ({
                           inputMode="numeric"
                           value={field.value}
                           onChange={handleOtpChange}
-                          onInput={handleOtpChange}
                           containerClassName="flex justify-center w-full"
                         >
                           <InputOTPGroup className="gap-3">

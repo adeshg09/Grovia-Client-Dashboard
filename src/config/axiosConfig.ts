@@ -15,6 +15,10 @@ import { AUTH_ENDPOINTS } from "@/services/endpoints";
 
 const axiosConfig: AxiosInstance = axios.create({
   baseURL: envConfig.apiBaseUrl,
+  timeout: 30000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 // Request Interceptor
@@ -26,11 +30,19 @@ axiosConfig.interceptors.request.use(
       const tempToken = getTempToken();
       if (tempToken && isValidTempToken(tempToken)) {
         token = tempToken;
+        config.headers["x-token-type"] = "temp";
+      } else {
+        const accessToken = getAccessToken();
+        if (accessToken && isValidToken(accessToken)) {
+          token = accessToken;
+          config.headers["x-token-type"] = "access";
+        }
       }
     } else {
       const accessToken = getAccessToken();
       if (accessToken && isValidToken(accessToken)) {
         token = accessToken;
+        config.headers["x-token-type"] = "access";
       }
     }
 

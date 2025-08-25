@@ -70,6 +70,7 @@ import {
 } from "@/components/ui/table";
 import { CardHeader } from "../ui/card";
 import { Filter, Plus, Search, SortAscIcon } from "lucide-react";
+import { DotsLoader } from "../Loader";
 
 // ----------------------------------------------------------------------
 // Types and Interfaces
@@ -104,6 +105,8 @@ export interface DataTableProps<TData, TValue = any> {
   onAddButtonClick?: () => void;
 
   headerActions?: React.ReactNode;
+
+  isLoading?: boolean;
 }
 
 interface DragHandleProps {
@@ -225,6 +228,7 @@ export function DataTable<TData, TValue = any>({
   addButtonTitle,
   onAddButtonClick,
   headerActions,
+  isLoading = false,
 }: DataTableProps<TData, TValue>) {
   // ----------------------------------------------------------------------
   // State Management
@@ -568,7 +572,19 @@ export function DataTable<TData, TValue = any>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>{renderTableRows()}</TableBody>
+          <TableBody>
+            {isLoading ? (
+              <TableRow>
+                <TableCell colSpan={columns.length}>
+                  <div className="flex justify-center items-center h-24">
+                    <DotsLoader />
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              renderTableRows()
+            )}
+          </TableBody>
         </Table>
       </div>
 

@@ -1,6 +1,6 @@
 /* Imports */
 import AdminDashboardPage from "@/components/Page/AdminDashboardPage";
-import { useEffect, useState, type JSX } from "react";
+import { type JSX } from "react";
 
 /* Relative Imports */
 

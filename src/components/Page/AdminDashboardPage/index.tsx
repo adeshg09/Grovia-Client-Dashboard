@@ -1,5 +1,5 @@
 /* Imports */
-import React, { forwardRef, memo, type JSX } from "react";
+import React, { forwardRef, memo, useContext, useState, type JSX } from "react";
 import { Helmet } from "react-helmet-async";
 
 /* Relative Imports */
@@ -17,18 +17,18 @@ import { typography } from "@/theme/typography";
 import { SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { BellIcon, SettingsIcon, Search, User } from "lucide-react";
+import { BellIcon, SettingsIcon, Search, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { ROOT_PATH } from "@/routes/paths";
 import AppLogo from "@/assets/images/appLogo.png";
+import SessionContext from "@/context/SessionContext";
+import ConfirmDialog from "@/components/Dialog/ConfirmDialog";
 
 // ----------------------------------------------------------------------
 export interface AdminDashboardPageProps {
   title?: string;
   children?: React.ReactNode;
   headerActions?: React.ReactNode;
-  addButtonTitle?: string;
-  onAddButtonClick?: () => void;
 }
 
 // ----------------------------------------------------------------------
@@ -50,20 +50,46 @@ const AdminDashboardPage = forwardRef<HTMLDivElement, AdminDashboardPageProps>(
     /* Hooks */
     const { isMobile } = useSidebar();
     const location = useLocation();
+    const { LogoutUser } = useContext(SessionContext);
 
     /* Constants */
     const currentYear = new Date().getFullYear();
-    // const pathnames = location.pathname.split("/").filter(Boolean);
-    // const breadcrumbs = [
-    //   { label: "Dashboard", href: "/" },
-    //   ...pathnames.map((segment, idx) => {
-    //     const href = "/" + pathnames.slice(0, idx + 1).join("/");
-    //     return {
-    //       label: segment.charAt(0).toUpperCase() + segment.slice(1),
-    //       href: idx === pathnames.length - 1 ? undefined : href, // last one is page
-    //     };
-    //   }),
-    // ];
+
+    /* States */
+    const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+    /* Functions */
+    /**
+     * Function to handle logout button click
+     * Shows the confirmation dialog
+     */
+    const handleLogoutClick = (): void => {
+      setShowLogoutDialog(true);
+    };
+
+    /**
+     * Function to handle logout confirmation
+     * Makes logout API call and clears session
+     */
+    const handleLogoutConfirm = async (): Promise<void> => {
+      setIsLoggingOut(true);
+      try {
+        await LogoutUser();
+      } catch (error) {
+        console.error("Logout failed:", error);
+      } finally {
+        setIsLoggingOut(false);
+        setShowLogoutDialog(false);
+      }
+    };
+
+    /**
+     * Function to handle logout dialog cancel
+     */
+    const handleLogoutCancel = (): void => {
+      setShowLogoutDialog(false);
+    };
 
     /* Output */
     return (
@@ -137,6 +163,19 @@ const AdminDashboardPage = forwardRef<HTMLDivElement, AdminDashboardPageProps>(
                 <span className="sr-only">Settings</span>
               </Button>
 
+              {/* Logout Button */}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleLogoutClick}
+                disabled={isLoggingOut}
+                className="h-9 w-9 sm:h-10 sm:w-10 rounded-md bg-muted/50 hover:bg-muted  dark:hover:bg-red-900/20 disabled:opacity-50"
+                title="Logout"
+              >
+                <LogOut className="h-5 w-5 text-red-600 dark:text-red-400" />
+                <span className="sr-only">Logout</span>
+              </Button>
+
               {headerActions ? headerActions : null}
             </div>
           </CardHeader>
@@ -154,52 +193,8 @@ const AdminDashboardPage = forwardRef<HTMLDivElement, AdminDashboardPageProps>(
                   </CardTitle>
                 </CardHeader>
 
-                {/* Actions Row */}
-                {/* {!location?.pathname?.match(/\/(create|edit)/) ? (
-                  <CardHeader className="dark:border-b-secondary-600 flex w-full items-center p-0">
-                    <div className="flex-1 max-w-md lg:max-w-xl pr-4  ">
-                      <div className="relative w-full cursor-pointer h-full">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input
-                          placeholder="Search..."
-                          className="pl-10 bg-muted/50 border-0 focus-visible:ring-0 w-full"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 sm:gap-3 w-auto ml-auto">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 sm:h-10 sm:w-10 rounded-md bg-muted/50 hover:bg-muted"
-                      >
-                        <SortAscIcon className="h-5 w-5" />
-                      </Button>
-
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 sm:h-10 sm:w-10 rounded-md bg-muted/50 hover:bg-muted"
-                      >
-                        <Filter className="h-5 w-5" />
-                      </Button>
-
-                      <Button
-                        onClick={onAddButtonClick}
-                        className="flex items-center whitespace-nowrap"
-                        leftIcon={<Plus className="h-4 w-4" />}
-                        size="medium"
-                      >
-                        Add New {addButtonTitle}
-                      </Button>
-
-                      {headerActions ? headerActions : null}
-                    </div>
-                  </CardHeader>
-                ) : null} */}
-
                 {/* Main children */}
-                {children}
+                <div className="overflow-hidden h-full">{children}</div>
               </Card>
             )}
           </CardContent>
@@ -216,6 +211,19 @@ const AdminDashboardPage = forwardRef<HTMLDivElement, AdminDashboardPageProps>(
             </div>
           </CardFooter>
         </Card>
+
+        {/* Logout Confirmation Dialog */}
+        <ConfirmDialog
+          open={showLogoutDialog}
+          title="Confirm Logout"
+          description="Are you sure you want to logout? You will be redirected to the login page and lose any unsaved changes."
+          isSubmitting={isLoggingOut}
+          agreeText="Yes, Logout"
+          disagreeText="Cancel"
+          onAgreeAction={handleLogoutConfirm}
+          onDisAgreeAction={handleLogoutCancel}
+          onOpenChange={setShowLogoutDialog}
+        />
       </div>
     );
   }

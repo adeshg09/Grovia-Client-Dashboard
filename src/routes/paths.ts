@@ -124,3 +124,14 @@ export const PAGE_OUTLET_ADMIN_DASHBOARD = {
     absolutePath: `/${ROOT_OUTLET_ADMIN_DASHBOARD}/captains`,
   },
 };
+
+export const PAGE_OTHERS = {
+  settings: {
+    relativePath: "settings",
+    absolutePath: "/settings",
+  },
+  helpAndSupport: {
+    relativePath: "help-and-support",
+    absolutePath: "/help-and-support",
+  },
+};

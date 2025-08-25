@@ -1,7 +1,7 @@
 import {
+  PAGE_OTHERS,
   PAGE_OUTLET_ADMIN_DASHBOARD,
   PAGE_SUPER_ADMIN_DASHBOARD,
-  ROOT_PATH,
 } from "@/routes/paths";
 import {
   BarChart3,
@@ -13,7 +13,6 @@ import {
   UserSquare,
   Settings,
   HelpCircle,
-  LogOut,
 } from "lucide-react";
 
 export const superAdminSidebarConfig = [
@@ -88,18 +87,13 @@ export const sidebarOthersConfig = [
     sections: [
       {
         name: "Settings",
-        url: ROOT_PATH,
+        url: PAGE_OTHERS.settings.absolutePath,
         icon: Settings,
       },
       {
         name: "Help & Support",
-        url: ROOT_PATH,
+        url: PAGE_OTHERS.helpAndSupport.absolutePath,
         icon: HelpCircle,
-      },
-      {
-        name: "Logout",
-        url: ROOT_PATH,
-        icon: LogOut,
       },
     ],
   },

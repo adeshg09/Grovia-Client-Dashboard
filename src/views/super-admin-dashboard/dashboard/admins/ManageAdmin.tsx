@@ -22,7 +22,7 @@ const ManageAdmin = (): JSX.Element => {
 
   /* Constants */
   const addAdminPath = PAGE_SUPER_ADMIN_DASHBOARD.admins.create.relativePath;
-  // const editAdminPath = PAGE_SUPER_ADMIN_DASHBOARD.admins.edit.relativePath;
+  const editAdminPath = PAGE_SUPER_ADMIN_DASHBOARD.admins.edit.relativePath;
 
   /* States */
   const [admins, setAdmins] = useState<OutletAdminProfileModel[]>([]);
@@ -37,22 +37,26 @@ const ManageAdmin = (): JSX.Element => {
     const response = await getAllOutletAdminsMutation.mutateAsync();
     console.log("response", response);
 
-    if (response?.status?.response_code === 200) {
+    if (response?.status?.response_code === 200 && response.data?.admins) {
       setAdmins(response.data.admins);
     }
   };
+  /**
+   * function to navigate to add admin page
+   *
+   * @returns {void}
+   */
   const onAddButtonClick = () => {
     navigate(addAdminPath);
   };
 
   const handleEdit = (admin: OutletAdminProfileModel) => {
-    // navigate(editAdminPath.replace(":id", admin.id));
-    console.log("Edit admin", admin);
+    console.log("edit admin", admin);
+    navigate(editAdminPath.replace(":id", admin?.profile?.id));
   };
 
   const handleDelete = async (admin: OutletAdminProfileModel) => {
     console.log("Delete admin", admin);
-    // TODO: hook into delete mutation once available
   };
 
   const handleView = (admin: OutletAdminProfileModel) => {
@@ -73,6 +77,11 @@ const ManageAdmin = (): JSX.Element => {
           </span>
         );
       },
+    },
+    {
+      accessorKey: "role",
+      header: "Role",
+      cell: ({ row }) => <span>{row.original.role}</span>,
     },
     {
       accessorKey: "phoneNumber",
@@ -148,41 +157,44 @@ const ManageAdmin = (): JSX.Element => {
       },
     },
     {
-      accessorKey: "isPhoneVerified",
-      header: "Phone Verified",
-      cell: ({ row }) => {
-        return (
-          <Switch
-            checked={row.original.isPhoneVerified}
-            onCheckedChange={(value) => {
-              console.log("Phone verified switched:", value, row.original.id);
-            }}
-          />
-        );
-      },
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) => <span>{row.original.status}</span>,
     },
-    {
-      accessorKey: "isActivated",
-      header: "Activated",
-      cell: ({ row }) => {
-        return (
-          <Switch
-            checked={row.original.isActivated}
-            onCheckedChange={(value) => {
-              console.log("Activated switched:", value, row.original.id);
-            }}
-          />
-        );
-      },
-    },
+    // {
+    //   accessorKey: "isPhoneVerified",
+    //   header: "Phone Verified",
+    //   cell: ({ row }) => {
+    //     return (
+    //       <Switch
+    //         checked={row.original.isPhoneVerified}
+    //         onCheckedChange={(value) => {
+    //           console.log("Phone verified switched:", value, row.original.id);
+    //         }}
+    //       />
+    //     );
+    //   },
+    // },
+    // {
+    //   accessorKey: "isActivated",
+    //   header: "Activated",
+    //   cell: ({ row }) => {
+    //     return (
+    //       <Switch
+    //         checked={row.original.isActivated}
+    //         onCheckedChange={(value) => {
+    //           console.log("Activated switched:", value, row.original.id);
+    //         }}
+    //       />
+    //     );
+    //   },
+    // },
   ];
 
   /* Side-Effects */
   useEffect(() => {
     handleGetAdmins();
   }, []);
-
-  // const isLoading = getAllOutletAdminsMutation.isPending;
 
   /* Output */
   return (
@@ -196,7 +208,7 @@ const ManageAdmin = (): JSX.Element => {
           columns={columns}
           data={admins}
           searchPlaceholder="Search admins..."
-          // loading={isLoading}
+          isLoading={getAllOutletAdminsMutation.isPending}
           actions={(admin) => (
             <>
               <DropdownMenuItem onClick={() => handleView(admin)}>

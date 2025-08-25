@@ -15,7 +15,7 @@ const ManageAnalyticPage = lazy(
     import("@/views/outlet-admin-dashboard/dashboard/analytics/ManageAnalytic")
 );
 
-const NotAllowedPage = lazy(() => import("@/views/page-not-allowed"));
+// const NotAllowedPage = lazy(() => import("@/views/page-not-allowed"));
 
 // ----------------------------------------------------------------------
 

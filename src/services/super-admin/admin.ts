@@ -35,14 +35,31 @@ export const GetAllOutletAdminsRequest = (): Promise<ApiResponse> => {
 // ----------------------------------------------------------------------
 
 /* Interface */
-interface createOutletAdminApiRequest {
-  name: string;
+
+/* Function */
+export const GetOutletAdminByIdRequest = (
+  adminId: string
+): Promise<ApiResponse> => {
+  return axiosInstance
+    .get(
+      ADMIN_DASHBOARD_ENDPOINTS.SUPERADMIN_DASHBOARD_ENDPOINTS.GET_OUTLET_ADMIN_BY_ID.replace(
+        ":outletAdminId",
+        adminId
+      )
+    )
+    .then((response) => response.data);
+};
+
+// ----------------------------------------------------------------------
+
+/* Interface */
+export interface createOutletAdminApiRequest {
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
-  countryCode: string;
   role: string;
-  password: string;
-  outletId: string;
+  status: string;
 }
 
 /* Function */
@@ -53,6 +70,34 @@ export const createOutletAdminRequest = (
     .post(
       ADMIN_DASHBOARD_ENDPOINTS.SUPERADMIN_DASHBOARD_ENDPOINTS
         .CREATE_OUTLET_ADMIN,
+      reqData
+    )
+    .then((response) => response.data);
+};
+
+// ----------------------------------------------------------------------
+
+/* Interface */
+export interface updateOutletAdminApiRequest {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phoneNumber?: string;
+  role?: string;
+  status?: string;
+}
+
+/* Function */
+export const updateOutletAdminRequest = (
+  adminId: string,
+  reqData: updateOutletAdminApiRequest
+): Promise<ApiResponse> => {
+  return axiosInstance
+    .patch(
+      ADMIN_DASHBOARD_ENDPOINTS.SUPERADMIN_DASHBOARD_ENDPOINTS.UPDATE_OUTLET_ADMIN.replace(
+        ":outletAdminId",
+        adminId
+      ),
       reqData
     )
     .then((response) => response.data);

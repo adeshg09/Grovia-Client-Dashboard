@@ -1,5 +1,5 @@
 /* Imports */
-import { useEffect, useState, type JSX } from "react";
+import { type JSX } from "react";
 
 /* Relative Imports */
 

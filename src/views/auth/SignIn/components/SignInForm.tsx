@@ -102,7 +102,7 @@ const SignInForm = ({ onSubmitSuccess }: SignInFormProps): JSX.Element => {
         false,
         response?.data?.selectedAccount
       );
-      // removeTempToken();
+      removeTempToken();
     }
   };
 
@@ -112,7 +112,7 @@ const SignInForm = ({ onSubmitSuccess }: SignInFormProps): JSX.Element => {
     setAvailableOptions([]);
 
     // Clear temp token from cookies
-    // removeTempToken();
+    removeTempToken();
   };
 
   const handleResendOtp = () => {

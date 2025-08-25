@@ -52,7 +52,7 @@ const SidebarSectionsListingContainer: React.FC<
       </SidebarGroupLabel>
       <SidebarMenu className="gap-2">
         {sections.map((section) => {
-          const isActive = location.pathname === section.url;
+          const isActive = location.pathname.includes(section.url);
           return (
             <SidebarMenuItem key={section.name}>
               <Link to={section.url}>

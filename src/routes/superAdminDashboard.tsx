@@ -73,7 +73,7 @@ const ManageProductRequestPage = lazy(
     )
 );
 
-const NotAllowedPage = lazy(() => import("@/views/page-not-allowed"));
+// const NotAllowedPage = lazy(() => import("@/views/page-not-allowed"));
 
 // ----------------------------------------------------------------------
 

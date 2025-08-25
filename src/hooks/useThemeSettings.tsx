@@ -1,5 +1,5 @@
 /* Imports */
-import { useCallback, useContext } from "react";
+import { useContext } from "react";
 import ThemeContextProvider from "@/context/ThemeContext";
 
 /* Relative Imports */
